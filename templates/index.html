@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Job Department Classifier</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            max-width: 800px;
+            width: 100%;
+            padding: 40px;
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 10px;
+            font-size: 2.5em;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 1.1em;
+        }
+
+        .accuracy-badge {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 8px 20px;
+            border-radius: 20px;
+            display: inline-block;
+            font-weight: bold;
+            margin-bottom: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        label {
+            display: block;
+            color: #333;
+            font-weight: 600;
+            margin-bottom: 8px;
+            font-size: 1.1em;
+        }
+
+        input[type="text"],
+        textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 1em;
+            transition: border-color 0.3s;
+            font-family: inherit;
+        }
+
+        input[type="text"]:focus,
+        textarea:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 150px;
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px 40px;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.1em;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .result {
+            margin-top: 30px;
+            padding: 25px;
+            background: #f8f9fa;
+            border-radius: 15px;
+            display: none;
+            animation: slideIn 0.5s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .result.show {
+            display: block;
+        }
+
+        .prediction {
+            text-align: center;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+
+        .prediction h2 {
+            font-size: 1.5em;
+            margin-bottom: 10px;
+        }
+
+        .prediction .department {
+            font-size: 2.5em;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+
+        .prediction .confidence {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        .probabilities {
+            margin-top: 20px;
+        }
+
+        .probabilities h3 {
+            color: #333;
+            margin-bottom: 15px;
+            font-size: 1.2em;
+        }
+
+        .prob-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .prob-label {
+            width: 150px;
+            font-weight: 600;
+            color: #555;
+        }
+
+        .prob-bar-container {
+            flex: 1;
+            background: #e0e0e0;
+            border-radius: 10px;
+            height: 30px;
+            margin: 0 15px;
+            overflow: hidden;
+        }
+
+        .prob-bar {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+            border-radius: 10px;
+            transition: width 0.5s ease-out;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            padding-right: 10px;
+            color: white;
+            font-weight: 600;
+        }
+
+        .prob-value {
+            width: 70px;
+            text-align: right;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .error {
+            background: #fee;
+            border: 2px solid #fcc;
+            color: #c33;
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 20px;
+            display: none;
+        }
+
+        .error.show {
+            display: block;
+        }
+
+        .example-btn {
+            background: #f0f0f0;
+            border: 2px solid #ddd;
+            color: #666;
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-size: 0.9em;
+            cursor: pointer;
+            margin-right: 10px;
+            margin-bottom: 10px;
+            display: inline-block;
+            transition: all 0.3s;
+        }
+
+        .example-btn:hover {
+            background: #667eea;
+            color: white;
+            border-color: #667eea;
+        }
+
+        .examples {
+            margin-bottom: 20px;
+        }
+
+        .loading {
+            display: none;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .loading.show {
+            display: block;
+        }
+
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #667eea;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎯 Job Department Classifier</h1>
+        <p class="subtitle">XGBoost AI Model - Trained on 4,612+ Job Postings</p>
+        <div style="text-align: center;">
+            <span class="accuracy-badge">✨ 95.23% Test Accuracy</span>
+        </div>
+
+        <form id="predictionForm">
+            <div class="form-group">
+                <label for="job_title">Job Title</label>
+                <input type="text" id="job_title" name="job_title" placeholder="e.g., Senior Software Engineer">
+            </div>
+
+            <div class="form-group">
+                <label for="job_description">Job Description *</label>
+                <div class="examples">
+                    <button type="button" class="example-btn" onclick="loadExample(1)">💻 Developer</button>
+                    <button type="button" class="example-btn" onclick="loadExample(2)">💰 Sales</button>
+                    <button type="button" class="example-btn" onclick="loadExample(3)">📊 Finance</button>
+                    <button type="button" class="example-btn" onclick="loadExample(4)">👥 HR</button>
+                </div>
+                <textarea id="job_description" name="job_description" placeholder="Paste the job description here..." required></textarea>
+            </div>
+
+            <button type="submit" class="btn" id="submitBtn">Predict Department</button>
+        </form>
+
+        <div class="loading" id="loading">
+            <div class="spinner"></div>
+            <p style="margin-top: 10px; color: #666;">Analyzing job posting...</p>
+        </div>
+
+        <div class="error" id="error"></div>
+
+        <div class="result" id="result">
+            <div class="prediction">
+                <h2>Predicted Department</h2>
+                <div class="department" id="department"></div>
+                <div class="confidence">Confidence: <span id="confidence"></span></div>
+            </div>
+
+            <div class="probabilities">
+                <h3>All Department Probabilities</h3>
+                <div id="probabilities"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const examples = {
+            1: {
+                title: "Senior Software Engineer",
+                description: "We are looking for a Senior Software Engineer to join our development team. You will be responsible for designing and implementing scalable web applications using Python, Django, and React. Experience with cloud platforms (AWS, Azure) is required. You'll work on microservices architecture, REST APIs, and database optimization. Strong knowledge of Git, CI/CD, and agile methodologies is essential."
+            },
+            2: {
+                title: "Sales Account Executive",
+                description: "Seeking an experienced Sales Account Executive to drive revenue growth. You will be responsible for prospecting new clients, managing the full sales cycle, and closing deals. Must have excellent communication skills and experience with CRM software. Your role includes conducting product demonstrations, negotiating contracts, and meeting quarterly sales targets. B2B sales experience preferred."
+            },
+            3: {
+                title: "Financial Analyst",
+                description: "Join our finance team as a Financial Analyst. Responsibilities include budgeting, forecasting, financial modeling, and variance analysis. You'll prepare monthly reports, assist with audits, and provide insights to senior management. Strong Excel skills and knowledge of accounting principles required. CPA or CFA certification is a plus. Experience with ERP systems and financial software needed."
+            },
+            4: {
+                title: "HR Manager",
+                description: "We're hiring an HR Manager to oversee all human resources functions. You'll manage recruitment, onboarding, employee relations, performance management, and compliance. Responsible for developing HR policies, conducting training programs, and handling employee benefits. Strong interpersonal skills and knowledge of labor laws required. SHRM certification preferred."
+            }
+        };
+
+        function loadExample(num) {
+            const example = examples[num];
+            document.getElementById('job_title').value = example.title;
+            document.getElementById('job_description').value = example.description;
+        }
+
+        document.getElementById('predictionForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const submitBtn = document.getElementById('submitBtn');
+            const loading = document.getElementById('loading');
+            const result = document.getElementById('result');
+            const error = document.getElementById('error');
+            
+            // Hide previous results
+            result.classList.remove('show');
+            error.classList.remove('show');
+            
+            // Show loading
+            submitBtn.disabled = true;
+            loading.classList.add('show');
+            
+            const formData = new FormData(e.target);
+            
+            try {
+                const response = await fetch('/predict', {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    // Display prediction
+                    document.getElementById('department').textContent = data.predicted_department;
+                    document.getElementById('confidence').textContent = (data.confidence * 100).toFixed(2) + '%';
+                    
+                    // Display probabilities
+                    const probsContainer = document.getElementById('probabilities');
+                    probsContainer.innerHTML = '';
+                    
+                    data.all_probabilities.forEach(([dept, prob]) => {
+                        const probItem = document.createElement('div');
+                        probItem.className = 'prob-item';
+                        probItem.innerHTML = `
+                            <div class="prob-label">${dept}</div>
+                            <div class="prob-bar-container">
+                                <div class="prob-bar" style="width: ${prob * 100}%">
+                                    ${prob > 0.1 ? (prob * 100).toFixed(1) + '%' : ''}
+                                </div>
+                            </div>
+                            <div class="prob-value">${(prob * 100).toFixed(2)}%</div>
+                        `;
+                        probsContainer.appendChild(probItem);
+                    });
+                    
+                    result.classList.add('show');
+                    result.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                } else {
+                    error.textContent = data.error || 'An error occurred';
+                    error.classList.add('show');
+                }
+            } catch (err) {
+                error.textContent = 'Failed to connect to server: ' + err.message;
+                error.classList.add('show');
+            } finally {
+                loading.classList.remove('show');
+                submitBtn.disabled = false;
+            }
+        });
+    </script>
+</body>
+</html>
+

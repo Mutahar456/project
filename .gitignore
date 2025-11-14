@@ -61,3 +61,9 @@ logs/
 models/
 checkpoints/
 
+# Flask
+instance/
+.webassets-cache
+__pycache__/
+*.pyc
+
