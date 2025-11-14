@@ -1,0 +1,225 @@
+===============================================================================
+SAMPLE JOB DESCRIPTIONS FOR TESTING THE MODEL
+===============================================================================
+
+Use these examples to test your Job Department Classifier!
+Simply copy and paste them into the web interface at http://localhost:5000
+
+===============================================================================
+1. DEVELOPMENT - Software Engineer
+===============================================================================
+Title: Senior Full Stack Developer
+
+Description:
+We are seeking a talented Senior Full Stack Developer to join our engineering team. 
+You will design, develop, and maintain scalable web applications using modern 
+technologies. Key responsibilities include writing clean code in Python, JavaScript, 
+and TypeScript, developing REST APIs, implementing microservices architecture, and 
+working with databases like PostgreSQL and MongoDB. Experience with React, Node.js, 
+Docker, Kubernetes, and cloud platforms (AWS/Azure) is essential. You'll participate 
+in code reviews, mentor junior developers, and collaborate with cross-functional teams 
+using Agile methodologies. Strong problem-solving skills and Git proficiency required.
+
+===============================================================================
+2. DEVELOPMENT - Data Scientist
+===============================================================================
+Title: Senior Data Scientist
+
+Description:
+Join our data science team to build machine learning models and derive insights from 
+large datasets. You'll work with Python, TensorFlow, PyTorch, and scikit-learn to 
+develop predictive models, perform statistical analysis, and create data visualizations. 
+Responsibilities include data preprocessing, feature engineering, model training and 
+evaluation, and deploying ML pipelines to production. Experience with SQL, big data 
+tools (Spark, Hadoop), and cloud ML platforms required. Strong understanding of 
+algorithms, statistics, and deep learning. Work closely with engineering and product 
+teams to solve complex business problems.
+
+===============================================================================
+3. SALES - Account Executive
+===============================================================================
+Title: Enterprise Sales Account Executive
+
+Description:
+We're looking for a driven Account Executive to grow our enterprise customer base. 
+You will prospect new clients, qualify leads, conduct product demonstrations, and 
+close deals. Manage the entire sales cycle from initial contact to contract signing. 
+Build strong relationships with C-level executives and key decision-makers. Achieve 
+quarterly and annual sales quotas, maintain accurate CRM records in Salesforce, and 
+collaborate with marketing on lead generation campaigns. Excellent communication, 
+negotiation, and presentation skills required. B2B SaaS sales experience preferred. 
+Travel up to 30% for client meetings and industry events.
+
+===============================================================================
+4. SALES - Business Development Manager
+===============================================================================
+Title: Business Development Manager
+
+Description:
+Seeking a Business Development Manager to drive revenue growth and expand market 
+presence. Identify new business opportunities, develop strategic partnerships, and 
+create go-to-market strategies. Conduct market research, analyze competitor activities, 
+and build relationships with potential clients. Generate leads through networking, 
+cold calling, and attending industry conferences. Collaborate with sales and marketing 
+teams to create proposals and presentations. Meet revenue targets and KPIs. Strong 
+analytical skills, excellent communication abilities, and experience in consultative 
+selling required. MBA or equivalent business degree preferred.
+
+===============================================================================
+5. FINANCE - Financial Analyst
+===============================================================================
+Title: Senior Financial Analyst
+
+Description:
+Join our finance team as a Senior Financial Analyst. Prepare financial reports, 
+budgets, and forecasts for senior management. Perform variance analysis, financial 
+modeling, and scenario planning. Analyze revenue, expenses, and profitability metrics. 
+Support monthly and quarterly close processes, assist with annual audits, and ensure 
+compliance with accounting standards. Strong Excel skills including pivot tables, 
+VLOOKUP, and macros required. Experience with ERP systems (SAP, Oracle), QuickBooks, 
+and data visualization tools (Tableau, Power BI). CPA or CFA certification is a plus. 
+Excellent analytical and communication skills essential.
+
+===============================================================================
+6. FINANCE - Accountant
+===============================================================================
+Title: Staff Accountant
+
+Description:
+We need a detail-oriented Staff Accountant to manage day-to-day accounting operations. 
+Responsibilities include accounts payable/receivable processing, general ledger 
+maintenance, bank reconciliations, and journal entries. Prepare monthly financial 
+statements, assist with tax filings, and support year-end audit processes. Process 
+invoices, track expenses, and maintain accurate financial records. Ensure compliance 
+with GAAP principles and internal controls. Bachelor's degree in Accounting or Finance 
+required. Proficiency in QuickBooks, Excel, and accounting software essential. 
+Strong organizational skills and attention to detail needed.
+
+===============================================================================
+7. HR - Human Resources Manager
+===============================================================================
+Title: HR Manager
+
+Description:
+We're hiring an experienced HR Manager to lead all human resources functions. Oversee 
+recruitment and hiring processes, onboarding new employees, and developing retention 
+strategies. Manage employee relations, performance management systems, and disciplinary 
+procedures. Develop and implement HR policies, ensure labor law compliance, and handle 
+benefits administration. Conduct training programs, facilitate conflict resolution, 
+and support organizational development initiatives. Strong knowledge of employment 
+laws (FMLA, ADA, EEOC), HRIS systems, and payroll processing. SHRM-CP or PHR 
+certification preferred. Excellent interpersonal and communication skills required.
+
+===============================================================================
+8. HR - Talent Acquisition Specialist
+===============================================================================
+Title: Talent Acquisition Specialist
+
+Description:
+Join our HR team as a Talent Acquisition Specialist focused on recruiting top talent. 
+Source candidates through job boards, LinkedIn, and networking events. Screen resumes, 
+conduct phone interviews, and coordinate interview schedules. Develop job descriptions, 
+post openings on multiple platforms, and build talent pipelines. Partner with hiring 
+managers to understand requirements and provide recruitment insights. Manage applicant 
+tracking system (ATS), maintain candidate databases, and track recruiting metrics. 
+Experience with Boolean searches, passive recruiting techniques, and employer branding. 
+Strong communication and negotiation skills essential.
+
+===============================================================================
+9. MARKETING - Digital Marketing Manager
+===============================================================================
+Title: Digital Marketing Manager
+
+Description:
+Seeking a Digital Marketing Manager to drive our online marketing strategy. Plan and 
+execute campaigns across SEO, SEM, social media, email marketing, and content marketing. 
+Manage Google Ads, Facebook Ads, and LinkedIn campaigns with budget optimization. 
+Analyze website traffic using Google Analytics, track KPIs, and generate performance 
+reports. Collaborate with design and content teams to create compelling marketing 
+materials. Implement marketing automation tools (HubSpot, Marketo), conduct A/B testing, 
+and optimize conversion rates. Strong understanding of digital marketing trends, 
+SEO best practices, and social media algorithms. Data-driven mindset required.
+
+===============================================================================
+10. MARKETING - Content Marketing Specialist
+===============================================================================
+Title: Content Marketing Specialist
+
+Description:
+We need a creative Content Marketing Specialist to develop engaging content that drives 
+brand awareness. Write blog posts, whitepapers, case studies, and social media content. 
+Develop content strategies aligned with business goals and target audiences. Conduct 
+keyword research for SEO optimization and manage editorial calendar. Collaborate with 
+design team on infographics and visual content. Monitor content performance metrics, 
+engagement rates, and adjust strategies accordingly. Experience with CMS platforms 
+(WordPress), SEO tools (Semrush, Ahrefs), and social media management. Excellent 
+writing, editing, and storytelling skills essential.
+
+===============================================================================
+11. RESEARCH - Research Scientist
+===============================================================================
+Title: Research Scientist - Machine Learning
+
+Description:
+Join our research lab as a Research Scientist focusing on machine learning innovation. 
+Conduct cutting-edge research in deep learning, natural language processing, and 
+computer vision. Design and implement novel algorithms, publish papers in top-tier 
+conferences (NeurIPS, ICML, CVPR), and collaborate with academic institutions. 
+Develop prototypes, run experiments, and analyze results. Work with large-scale 
+datasets and distributed computing systems. PhD in Computer Science, Machine Learning, 
+or related field required. Strong programming skills in Python, experience with 
+TensorFlow/PyTorch, and proven publication record essential.
+
+===============================================================================
+12. RESEARCH - Clinical Research Coordinator
+===============================================================================
+Title: Clinical Research Coordinator
+
+Description:
+We're seeking a Clinical Research Coordinator to manage clinical trials and research 
+studies. Recruit and screen participants, obtain informed consent, and schedule study 
+visits. Collect and document research data, maintain regulatory files, and ensure 
+protocol compliance. Coordinate with principal investigators, study sponsors, and 
+IRB committees. Monitor adverse events, prepare study reports, and maintain patient 
+safety records. Knowledge of GCP guidelines, FDA regulations, and HIPAA compliance 
+required. Experience with clinical trial management systems and electronic data 
+capture. Strong organizational and communication skills essential.
+
+===============================================================================
+13. SERVICE - Customer Service Manager
+===============================================================================
+Title: Customer Service Manager
+
+Description:
+Lead our customer service team to deliver exceptional support experiences. Manage 
+a team of customer service representatives, set performance goals, and conduct 
+training programs. Handle escalated customer issues, resolve complaints, and ensure 
+customer satisfaction. Monitor service metrics (response time, resolution rate, CSAT), 
+analyze trends, and implement process improvements. Develop service policies and 
+standard operating procedures. Experience with helpdesk software (Zendesk, Freshdesk), 
+CRM systems, and call center operations. Strong leadership, problem-solving, and 
+communication skills required. Ability to work in fast-paced environment.
+
+===============================================================================
+14. SERVICE - Technical Support Engineer
+===============================================================================
+Title: Technical Support Engineer
+
+Description:
+Join our support team as a Technical Support Engineer providing technical assistance 
+to customers. Troubleshoot software and hardware issues, diagnose problems, and 
+provide solutions via phone, email, and chat. Create and maintain technical 
+documentation, knowledge base articles, and troubleshooting guides. Escalate complex 
+issues to engineering teams and track ticket resolution. Work with ticketing systems 
+(JIRA, ServiceNow), remote desktop tools, and monitoring software. Strong technical 
+knowledge of operating systems, networking, and databases. Excellent customer service 
+skills and patience required. On-call rotation may be needed.
+
+===============================================================================
+
+TIP: Copy any job description above and paste it into the web interface to see 
+how accurately the model predicts the department!
+
+Visit: http://localhost:5000
+===============================================================================
+
