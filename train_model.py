@@ -46,8 +46,10 @@ class JobDepartmentClassifier:
         text = ' '.join(text.split())
         return text
     
-    def extract_features(self, df):
+    def extract_features(self, df, is_training=True):
         """Extract features from job postings"""
+        # Reset index to ensure alignment
+        df = df.reset_index(drop=True)
         features = []
         
         # Text features
@@ -71,21 +73,26 @@ class JobDepartmentClassifier:
         df['has_location'] = df['orgAddress'].apply(lambda x: 1 if isinstance(x, dict) and x.get('city') else 0)
         
         # TF-IDF features
-        tfidf_features = self.tfidf_vectorizer.fit_transform(df['text_clean'])
+        if is_training:
+            tfidf_features = self.tfidf_vectorizer.fit_transform(df['text_clean'])
+        else:
+            tfidf_features = self.tfidf_vectorizer.transform(df['text_clean'])
+            
         tfidf_df = pd.DataFrame(
             tfidf_features.toarray(),
-            columns=[f'tfidf_{i}' for i in range(tfidf_features.shape[1])]
+            columns=[f'tfidf_{i}' for i in range(tfidf_features.shape[1])],
+            index=df.index
         )
         
         # Combine all features
         numeric_features = df[['text_length', 'word_count', 'sentence_count', 
                                'title_length', 'title_word_count', 
-                               'source_encoded', 'has_company', 'has_location']]
+                               'source_encoded', 'has_company', 'has_location']].reset_index(drop=True)
         
-        features_df = pd.concat([numeric_features, tfidf_df], axis=1)
+        features_df = pd.concat([numeric_features.reset_index(drop=True), tfidf_df.reset_index(drop=True)], axis=1)
         self.feature_names = list(features_df.columns)
         
-        return features_df
+        return features_df, df
     
     def load_data(self, file_path, max_samples=None):
         """Load and preprocess data from JSONL file"""
@@ -129,14 +136,14 @@ class JobDepartmentClassifier:
         
         return df
     
-    def train(self, file_path, max_samples=10000):
+    def train(self, file_path, max_samples=50000):
         """Train the model"""
         # Load data
         df = self.load_data(file_path, max_samples)
         
         # Extract features
         print("\nExtracting features...")
-        X = self.extract_features(df)
+        X, df = self.extract_features(df)
         y = df['department'].values
         
         # Encode labels
@@ -178,15 +185,14 @@ class JobDepartmentClassifier:
             reg_lambda=1,
             random_state=42,
             eval_metric='mlogloss',
-            use_label_encoder=False
+            early_stopping_rounds=20
         )
         
         self.model.fit(
             X_train, y_train,
             sample_weight=sample_weights,
             eval_set=[(X_val, y_val)],
-            early_stopping_rounds=20,
-            verbose=False
+            verbose=True
         )
         
         # Evaluate on validation set
@@ -254,8 +260,8 @@ class JobDepartmentClassifier:
         }
         df = pd.DataFrame(data)
         
-        # Extract features
-        X = self.extract_features(df)
+        # Extract features (for prediction, we only need X)
+        X, _ = self.extract_features(df, is_training=False)
         
         # Predict
         y_pred_encoded = self.model.predict(X)
@@ -269,16 +275,62 @@ class JobDepartmentClassifier:
         }
         
         return y_pred[0], proba_dict
+    
+    def save_model(self, model_path='model.pkl', vectorizer_path='vectorizer.pkl', encoder_path='encoder.pkl'):
+        """Save trained model and preprocessing objects"""
+        import pickle
+        
+        if self.model is None:
+            raise ValueError("Model not trained. Call train() first.")
+        
+        print(f"\nSaving model to {model_path}...")
+        with open(model_path, 'wb') as f:
+            pickle.dump(self.model, f)
+        
+        print(f"Saving TF-IDF vectorizer to {vectorizer_path}...")
+        with open(vectorizer_path, 'wb') as f:
+            pickle.dump(self.tfidf_vectorizer, f)
+        
+        print(f"Saving label encoder to {encoder_path}...")
+        with open(encoder_path, 'wb') as f:
+            pickle.dump(self.label_encoder, f)
+        
+        print("[SUCCESS] Model and preprocessing objects saved successfully!")
+    
+    def load_model(self, model_path='model.pkl', vectorizer_path='vectorizer.pkl', encoder_path='encoder.pkl'):
+        """Load trained model and preprocessing objects"""
+        import pickle
+        
+        print(f"Loading model from {model_path}...")
+        with open(model_path, 'rb') as f:
+            self.model = pickle.load(f)
+        
+        print(f"Loading TF-IDF vectorizer from {vectorizer_path}...")
+        with open(vectorizer_path, 'rb') as f:
+            self.tfidf_vectorizer = pickle.load(f)
+        
+        print(f"Loading label encoder from {encoder_path}...")
+        with open(encoder_path, 'rb') as f:
+            self.label_encoder = pickle.load(f)
+        
+        print("[SUCCESS] Model and preprocessing objects loaded successfully!")
 
 
 if __name__ == "__main__":
     # Initialize classifier
     classifier = JobDepartmentClassifier(max_features=5000)
     
-    # Train model
+    # Train model with 50,000 samples for high accuracy
     results = classifier.train(
         file_path="techmap-jobs_us_2023-05-05.json",
-        max_samples=10000  # Adjust based on your dataset size
+        max_samples=50000
+    )
+    
+    # Save the trained model
+    classifier.save_model(
+        model_path='xgboost_department_model.pkl',
+        vectorizer_path='tfidf_vectorizer.pkl',
+        encoder_path='label_encoder.pkl'
     )
     
     print("\n" + "="*80)
@@ -287,9 +339,9 @@ if __name__ == "__main__":
     print(f"Final Test Accuracy: {results['test_accuracy']*100:.2f}%")
     
     if results['test_accuracy'] >= 0.90:
-        print("\n✓ Target accuracy of 90% achieved!")
+        print("\n[SUCCESS] Target accuracy of 90% achieved!")
     else:
-        print("\n⚠ Target accuracy not yet achieved. Consider:")
+        print("\n[WARNING] Target accuracy not yet achieved. Consider:")
         print("  - Increasing max_samples for more training data")
         print("  - Tuning hyperparameters further")
         print("  - Trying BERT/RoBERTa for higher accuracy")
